@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>去除换行符和特殊字符</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        
+        textarea {
+            width: 100%;
+            height: 150px;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            /* 使内边距和边框包含在宽度和高度内 */
+        }
+        
+        button {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 5px;
+            /* 添加按钮之间的间距 */
+        }
+        
+        button:hover {
+            background-color: #0056b3;
+            /* 鼠标悬停时的背景色 */
+        }
+        
+        #output {
+            border: 1px solid #ccc;
+            padding: 10px;
+            min-height: 100px;
+            background-color: white;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            /* 保持空格和换行 */
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>去除换行符和特殊字符工具</h1>
+    <textarea id="inputText" placeholder="在这里输入文本..."></textarea>
+    <button onclick="removeNewlines()">去除换行符和特殊字符</button>
+
+    <h2>结果：</h2>
+    <div id="output"></div>
+    <button onclick="copyToClipboard()">复制结果</button>
+
+    <script>
+        function removeNewlines() {
+            // 获取输入框的内容并确保转换为字符串
+            const inputText = String(document.getElementById('inputText').value);
+            // 去除换行符和 &quot;
+            const cleanedText = inputText.replace(/\\n/g, ' ').replace(/&quot;/g, '');
+
+            // 显示结果
+            document.getElementById('output').innerText = cleanedText.trim(); // 去除前后空格
+        }
+
+        function copyToClipboard() {
+            const outputText = document.getElementById('output').innerText;
+            if (outputText) {
+                // 创建一个临时文本区域
+                const tempTextArea = document.createElement('textarea');
+                tempTextArea.value = outputText;
+                document.body.appendChild(tempTextArea);
+                tempTextArea.select(); // 选中内容
+                document.execCommand('copy'); // 执行复制命令
+                document.body.removeChild(tempTextArea); // 移除临时文本区域
+                alert('结果已复制到剪贴板！'); // 提示用户
+            } else {
+                alert('没有内容可以复制！');
+            }
+        }
+    </script>
+
+</body>
+
+</html>
